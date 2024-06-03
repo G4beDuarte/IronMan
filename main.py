@@ -1,4 +1,4 @@
-import pygame, random
+import pygame, random, os
 pygame.init()
 tamanho = (800,600)
 clock = pygame.time.Clock()
@@ -18,10 +18,15 @@ posicaoYmissel = -240
 velocidadeMissel = 1
 missileSound = pygame.mixer.Sound("assets/missile.wav")
 pygame.mixer.Sound.play(missileSound)
-fonte = pygame.font.SysFont("timenewroman", 28)
+fonte = pygame.font.SysFont("timesnewroman", 28)
 pygame.mixer.music.load("assets/ironsound.mp3")
 pygame.mixer.music.play(-1)
 pontos = 0
+larguraPersona = 250
+alturaPersona = 127
+larguraMissel = 50
+alturaMissel = 250
+dificuldade = 0
 while True:
     for evento in pygame.event.get():
         if evento.type == pygame.QUIT:
@@ -71,6 +76,21 @@ while True:
     texto = fonte.render("Pontos: "+str(pontos),True,branco)
     tela.blit(texto, (10,10))
     
+    pixelsPersonaY = list(range(posicaoYPersona, posicaoYPersona + alturaPersona))
+    pixelsPersonaX = list(range(posicaoXPersona, posicaoXPersona + larguraPersona))
+    pixelsMisselY = list(range(posicaoYmissel, posicaoYmissel + alturaMissel))
+    pixelsMisselX = list(range(posicaoXmissel, posicaoXmissel + larguraMissel))
+
+    os.system("clear")
+    print(  )
+    if len( list(set(pixelsMisselY).intersection(set(pixelsPersonaY)))) > dificuldade:
+        if len( list( set(pixelsMisselX).intersection(set(pixelsPersonaX)) )) > dificuldade:
+            print("Morreu!")
+        else:
+            print("Ainda vivo, mas por pouco")
+    else:
+        print("Ainda vivo")
+
 
 
     pygame.display.update()
