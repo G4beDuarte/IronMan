@@ -18,9 +18,10 @@ posicaoYmissel = -240
 velocidadeMissel = 1
 missileSound = pygame.mixer.Sound("assets/missile.wav")
 pygame.mixer.Sound.play(missileSound)
-fonte = pygame.font.SysFont("timenewroman", 16)
+fonte = pygame.font.SysFont("timenewroman", 28)
 pygame.mixer.music.load("assets/ironsound.mp3")
 pygame.mixer.music.play(-1)
+pontos = 0
 while True:
     for evento in pygame.event.get():
         if evento.type == pygame.QUIT:
@@ -56,20 +57,19 @@ while True:
 
     tela.fill(branco)
     tela.blit(fundo,(0,0))
-    #pygame.draw.circle(tela,preto,(posicaoXPersona, posicaoYPersona), 40, 0 )
     tela.blit( iron, (posicaoXPersona, posicaoYPersona))
 
     posicaoYmissel = posicaoYmissel  + velocidadeMissel
     if posicaoYmissel > 600:
         posicaoYmissel = -240
+        pontos = pontos + 1
         velocidadeMissel = velocidadeMissel + 1
         posicaoXmissel = random.randint(0,800)
         pygame.mixer.Sound.play(missileSound)
 
     tela.blit(missel, (posicaoXmissel, posicaoYmissel))
-
-    #texto = fonte.render(str(posicaoXPersona)+"-"+str(posicaoXPersona),True,branco)
-    #tela.blit(texto, (posicaoXPersona -20, posicaoYPersona-10))
+    texto = fonte.render("Pontos: "+str(pontos),True,branco)
+    tela.blit(texto, (10,10))
     
 
 
